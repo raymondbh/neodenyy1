@@ -43,6 +43,7 @@ struct gcode_command {
 	int z_set;
 	int h1_set;
 	int h2_set;
+	int feedrate;
 
 	int actuate_target;
 #define	PNP_ACTUATE_TARGET_PUMP		1

@@ -235,6 +235,8 @@ gcode_command(char *line, int len)
 			cmd.actuate_value = value;
 			break;
 		case 'F':
+			/* Feedrate */
+			cmd.feedrate = value;
 			break;
 		default:
 			break;

@@ -402,7 +402,7 @@ pnp_worker_thread(void *arg)
 }
 
 static int
-pnp_move_nonblock(struct motor_state *motor, int new_pos)
+pnp_move_nonblock(struct motor_state *motor, int new_pos, int speed)
 {
 	struct move_task *task;
 	uint32_t delta;
@@ -412,6 +412,7 @@ pnp_move_nonblock(struct motor_state *motor, int new_pos)
 
 	task = &motor->task;
 	task->check_home = 0;
+	task->speed = speed;
 	task->speed_control = 1;
 
 	/* Convert required position from mm to degrees if needed. */
@@ -611,18 +612,20 @@ pnp_command_move(struct gcode_command *cmd)
 {
 	uint32_t x, y, z, h1, h2;
 
+	int speed = cmd->feedrate / 10;
+
 	/* TODO: check for errors. */
 
 	if (cmd->x_set) {
 		x = cmd->x;
 		printf("moving X to %d\n", x);
-		pnp_move_nonblock(&pnp.motor_x, x);
+		pnp_move_nonblock(&pnp.motor_x, x, speed);
 	}
 
 	if (cmd->y_set) {
 		y = cmd->y;
 		printf("moving Y to %d\n", y);
-		pnp_move_nonblock(&pnp.motor_y, y);
+		pnp_move_nonblock(&pnp.motor_y, y, speed);
 	}
 
 	if (cmd->h1_set) {

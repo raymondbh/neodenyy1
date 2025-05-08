@@ -227,8 +227,14 @@ void
 pnp_henable(int enable)
 {
 
-	pin_set(&gpio_sc, PORT_D, 12, enable); /* H Vref */
-	mdx_usleep(10000);
+	/*
+		Only set this to lock the rotation when holding a component.
+		The hardware design does not limit the current to the 
+		steppers and make them really hot if left on all the time
+	*/  
+	//pin_set(&gpio_sc, PORT_D, 12, enable); /* H Vref */
+	//mdx_usleep(10000);
+	
 	pin_set(&gpio_sc, PORT_D, 3, enable); /* H1 ST */
 	pin_set(&gpio_sc, PORT_A, 15, enable); /* H2 ST */
 	mdx_usleep(10000);

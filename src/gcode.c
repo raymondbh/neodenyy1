@@ -81,10 +81,16 @@ gcode_command_actuate(struct gcode_command *cmd)
 		mdx_usleep(250000);
 		break;
 	case PNP_ACTUATE_TARGET_AVAC1:
+		/* Lock rotation of stepper in idle when holding component*/
+		pin_set(&gpio_sc, PORT_D, 12, val); /* H Vref */
+		/* Actuate noozle vacum H1 */
 		pin_set(&gpio_sc, PORT_E, 2, val);
 		mdx_usleep(250000);
 		break;
 	case PNP_ACTUATE_TARGET_AVAC2:
+		/* Lock rotation of stepper in idle when holding component*/
+		pin_set(&gpio_sc, PORT_D, 12, val); /* H Vref */
+		/* Actuate noozle vacum H2 */
 		pin_set(&gpio_sc, PORT_E, 1, val);
 		mdx_usleep(250000);
 		break;
